@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+  portainer-ce:
+    container_name: main-portainer
+    image: portainer/portainer-ce:latest
+    restart: always
+    expose:
+      - "8000"
+      - "9000"
+      - "9443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./portainer/data:/data
+      - /etc/localtime:/etc/localtime:ro 
+    networks:
+      - main_net
+
+  tunnel:
+    container_name: main-cloudflared-tunnel
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: tunnel run
+    env_file:
+      - .env
+    networks:
+      - main_net
+
+
+networks:
+  main_net:
+    driver: bridge
