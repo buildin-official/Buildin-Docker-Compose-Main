@@ -26,6 +26,19 @@ services:
     networks:
       - main_net
 
+  yaade:
+    container_name: main-yaade
+    image: esperotech/yaade:latest
+    restart: always
+    expose:
+      - "9339"
+    volumes:
+      - ./yaade:/app/data
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .env
+    networks:
+      - main_net
 
 networks:
   main_net:
