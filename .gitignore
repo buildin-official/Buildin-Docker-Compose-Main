@@ -6,4 +6,5 @@ portainer/
 
 # infisical
 .infisical.env
-infisical/
+infisical/**/*
+!infisical/default.conf
