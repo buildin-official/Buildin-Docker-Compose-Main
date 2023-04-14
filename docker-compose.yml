@@ -38,7 +38,7 @@ services:
       - infisical-frontend
       - infisical-backend
     networks:
-      - infisical
+      - main_net
 
   infisical-backend:
     container_name: infisical-backend
@@ -50,7 +50,7 @@ services:
     environment:
       - NODE_ENV=production
     networks:
-      - infisical
+      - main_net
 
   infisical-frontend:
     container_name: infisical-frontend
@@ -66,7 +66,7 @@ services:
       - NEXT_PUBLIC_STRIPE_PRODUCT_TEAM=${STRIPE_PRODUCT_TEAM}
       - NEXT_PUBLIC_STRIPE_PRODUCT_STARTER=${STRIPE_PRODUCT_STARTER}
     networks:
-      - infisical
+      - main_net
 
   infisical-mongo:
     container_name: infisical-mongo
@@ -79,7 +79,7 @@ services:
     volumes:
       - ./infisical/db:/data/db
     networks:
-      - infisical
+      - main_net
 
 networks:
   main_net:
