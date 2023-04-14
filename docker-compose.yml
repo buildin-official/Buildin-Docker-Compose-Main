@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.8"
 
 services:
   portainer-ce:
@@ -26,19 +26,60 @@ services:
     networks:
       - main_net
 
-  yaade:
-    container_name: main-yaade
-    image: esperotech/yaade:latest
+  infisical-nginx:
+    container_name: infisical-nginx
+    image: nginx:latest
     restart: always
     expose:
-      - "9339"
+      - "80"
     volumes:
-      - ./yaade:/app/data
-      - /etc/localtime:/etc/localtime:ro
-    env_file:
-      - .env
+      - ./infisical/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - infisical-frontend
+      - infisical-backend
     networks:
-      - main_net
+      - infisical
+
+  infisical-backend:
+    container_name: infisical-backend
+    restart: unless-stopped
+    depends_on:
+      - infisical-mongo
+    image: infisical/backend:latest
+    env_file: .infisical.env
+    environment:
+      - NODE_ENV=production
+    networks:
+      - infisical
+
+  infisical-frontend:
+    container_name: infisical-frontend
+    restart: unless-stopped
+    depends_on:
+      - infisical-backend
+    image: infisical/frontend:latest
+    env_file: .infisical.env
+    environment:
+      # - NEXT_PUBLIC_POSTHOG_API_KEY=${POSTHOG_PROJECT_API_KEY}
+      - INFISICAL_TELEMETRY_ENABLED=${TELEMETRY_ENABLED}
+      - NEXT_PUBLIC_STRIPE_PRODUCT_PRO=${STRIPE_PRODUCT_PRO}
+      - NEXT_PUBLIC_STRIPE_PRODUCT_TEAM=${STRIPE_PRODUCT_TEAM}
+      - NEXT_PUBLIC_STRIPE_PRODUCT_STARTER=${STRIPE_PRODUCT_STARTER}
+    networks:
+      - infisical
+
+  infisical-mongo:
+    container_name: infisical-mongo
+    image: mongo:latest
+    restart: always
+    env_file: .infisical.env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+    volumes:
+      - ./infisical/db:/data/db
+    networks:
+      - infisical
 
 networks:
   main_net:

@@ -4,5 +4,6 @@
 # portainer
 portainer/
 
-# yaade
-yaade/
+# infisical
+.infisical.env
+infisical/
