@@ -1,2 +1,8 @@
-portainer/
+# secret
 .env
+
+# portainer
+portainer/
+
+# yaade
+yaade/
