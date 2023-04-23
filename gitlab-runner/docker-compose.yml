@@ -1,0 +1,43 @@
+version: "3.8"
+
+networks:
+  main_net:
+    name: main_main_net
+    external: true
+
+services:
+  gitlab-runner-buildin:
+    container_name: runner-builin
+    image: gitlab/gitlab-runner:latest
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./buildin:/etc/gitlab-runner
+    environment:
+      - TZ=Asia/Seoul
+    networks:
+      - main_net
+
+  gitlab-runner-itnun:
+    container_name: runner-itnun
+    image: gitlab/gitlab-runner:latest
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./itnun:/etc/gitlab-runner
+    environment:
+      - TZ=Asia/Seoul
+    networks:
+      - main_net
+
+  gitlab-runner-codingtutor:
+    container_name: runner-codingtutor
+    image: gitlab/gitlab-runner:latest
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./codingtutor:/etc/gitlab-runner
+    environment:
+      - TZ=Asia/Seoul
+    networks:
+      - main_net

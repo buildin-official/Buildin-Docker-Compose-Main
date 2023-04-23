@@ -6,3 +6,7 @@ portainer/
 
 # gitlab
 gitlab/
+
+# gitlab runner
+gitlab-runner/*
+!gitlab-runner/docker-compose.yml
