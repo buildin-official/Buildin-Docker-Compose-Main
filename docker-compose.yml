@@ -51,7 +51,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./gitlab/runner:/etc/gitlab-runner
     environment:
-      - TZ: Asia/Seoul
+      - TZ=Asia/Seoul
     networks:
       - main_net
 
