@@ -7,7 +7,7 @@ networks:
 
 services:
   gitlab-runner-buildin:
-    container_name: runner-builin
+    container_name: runner-buildin
     image: gitlab/gitlab-runner:latest
     restart: always
     volumes:
