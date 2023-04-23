@@ -3,8 +3,3 @@
 
 # portainer
 portainer/
-
-# infisical
-.infisical.env
-infisical/**/*
-!infisical/default.conf
