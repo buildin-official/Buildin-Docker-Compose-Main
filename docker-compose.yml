@@ -28,7 +28,7 @@ services:
 
   gitlab:
     container_name: main-gitlab
-    image: 'gitlab/gitlab-ee:latest'
+    image: gitlab/gitlab-ee:latest
     restart: always
     hostname: 'gitlab.buildin.kr'
     expose:
@@ -36,10 +36,22 @@ services:
       - '443:443'
       - '22:22'
     volumes:
-      - './gitlab/config:/etc/gitlab'
-      - './gitlab/logs:/var/log/gitlab'
-      - './gitlab/data:/var/opt/gitlab'
+      - ./gitlab/config:/etc/gitlab
+      - ./gitlab/logs:/var/log/gitlab
+      - ./gitlab/data:/var/opt/gitlab
     shm_size: '256m'
+    networks:
+      - main_net
+
+  gitlab-runner:
+    container_name: gitlab-runner
+    image: gitlab/gitlab-runner:latest
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./gitlab/runner:/etc/gitlab-runner
+    environment:
+      - TZ: Asia/Seoul
     networks:
       - main_net
 
