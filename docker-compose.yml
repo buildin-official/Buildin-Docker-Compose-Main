@@ -6,9 +6,9 @@ services:
     image: portainer/portainer-ce:latest
     restart: always
     expose:
-      - "8000"
-      - "9000"
-      - "9443"
+      - 8000
+      - 9000
+      - 9443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./portainer/data:/data
@@ -32,9 +32,8 @@ services:
     restart: always
     hostname: 'gitlab.buildin.kr'
     expose:
-      - '80:80'
-      - '443:443'
-      - '22:22'
+      - 80
+      - 5050
     volumes:
       - ./gitlab/config:/etc/gitlab
       - ./gitlab/logs:/var/log/gitlab
